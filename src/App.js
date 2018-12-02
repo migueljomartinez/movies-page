@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 
 // @components
-import Home from 'Containers/Home'
+import Home from 'Containers/HomeContainer'
 import Favorites from 'Containers/Favorites'
 
 // @others

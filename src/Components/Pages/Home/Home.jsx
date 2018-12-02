@@ -4,23 +4,19 @@ import Card from 'Components/Molecules/Card/Card'
 import styles from './Home.module.sass'
 
 class Home extends Component {
-  componentDidMount() {
-    this.props.requestMovies()
-  }
-
   render() {
     const { movies } = this.props
-
+  
     return (
       <div className={styles.container}>
         <h1>Movies</h1>
         <div className={styles.cards}>
           {
-            movies.map(movie => (
-              <div className={styles.card}>
+            movies.results.map(movie => (
+              <div className={styles.card} key={movie.id}>
                 <Card
                   title={movie.title}
-                  image="https://source.unsplash.com/random/240x250"
+                  image={movie.complete_image}
                   rating={movie.vote_average}
                 />
               </div>
@@ -33,8 +29,7 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  movies: PropTypes.array.isRequired,
-  requestMovies: PropTypes.func.isRequired
+  movies: PropTypes.object.isRequired,
 }
 
 export default Home

@@ -14,6 +14,11 @@ function getMovies() {
   return fetchHelper(urls.movies)
 }
 
+function getTMDBConfiguration() {
+  return fetchHelper(urls.tmdbConfiguration)
+}
+
 export default {
   getMovies,
+  getTMDBConfiguration,
 }
