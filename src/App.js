@@ -1,12 +1,29 @@
-import React, { Component } from 'react'
-import Home from 'Components/Pages/Home/Home'
+// @vendors
+import React from 'react'
+import { Provider } from 'react-redux'
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom'
 
-class App extends Component {
-  render() {
-    return (
-      <Home />
-    )
-  }
-}
+// @components
+import Home from 'Containers/Home'
+import Favorites from 'Containers/Favorites'
+
+// @others
+import configureStore from 'module/state/configureStore'
+
+const store = configureStore()
+
+const App = () => (
+  <Provider store={store}>
+    <Router>
+      <div>
+        <Route path="/" exact component={Home} />
+        <Route path="/favorites" component={Favorites} />
+      </div>
+    </Router>
+  </Provider>
+)
 
 export default App
