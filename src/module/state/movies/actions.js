@@ -1,23 +1,28 @@
 import APIInterface from 'module/data/APIInterface'
 import * as types from './actionTypes'
+import _map from 'lodash.map'
 
 // @helpers
 function formatMoviesData(movies, TMDBConfiguration) {
-  console.log('movies', movies)
-  console.log('TMDBConfiguration', TMDBConfiguration)
   const imageBaseUrl = TMDBConfiguration.images.base_url
   const imageSize = TMDBConfiguration.images.poster_sizes[4]
 
-  const moviesWithCompleteImage = movies.results.map(movie => {
-    return {
-      ...movie,
-      complete_image: `${imageBaseUrl}${imageSize}/${movie.poster_path}`
-    }
-  })
+  const moviesWithCompleteImage = movies.results
+    .reduce((previousValue, currentValue) => {
+      return {
+        ...previousValue,
+        [currentValue.id]: {
+          ...currentValue,
+          complete_image: `${imageBaseUrl}${imageSize}/${currentValue.poster_path}`
+        }
+      }
+    }, {})
+
+  delete movies.results
 
   return {
     ...movies,
-    results: moviesWithCompleteImage,
+    entities: moviesWithCompleteImage,
   }
 }
 

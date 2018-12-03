@@ -1,8 +1,8 @@
 import * as actionTypes from './actionTypes'
 
 const initialState = {
-  results: [],
   loading: false,
+  entities: {},
 }
 
 export default function moviesReducer(state = initialState, action = {}) {
@@ -15,10 +15,10 @@ export default function moviesReducer(state = initialState, action = {}) {
     
     case actionTypes.REQUEST_MOVIES_SUCCESS:
       return {
+        ...action.payload,
         loading: false,
-        ...action.payload
       }
-    
+
     case actionTypes.REQUEST_MOVIES_FAILURE:
       return {
         ...state,

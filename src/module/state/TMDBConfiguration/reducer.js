@@ -1,7 +1,9 @@
 import actionTypes from './actionTypes'
 
 const initialState =  {
-  initialized: false
+  initialized: false,
+  loading: false,
+  error: null,
 }
 
 export default function TMDBConriguration(state = initialState, action = {}) {
