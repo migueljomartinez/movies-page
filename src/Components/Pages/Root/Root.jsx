@@ -43,7 +43,7 @@ class Root extends Component {
   render() {
     const { TMDBConfiguration } = this.props
 
-    if (TMDBConfiguration.loading) {
+    if (TMDBConfiguration.loading || !TMDBConfiguration.initialized) {
       return (
         <p>Loading...</p>
       )

@@ -1,19 +1,23 @@
 import APIInterface from 'module/data/APIInterface'
-import * as types from './actionTypes'
-import _map from 'lodash.map'
+import * as actionTypes from './actionTypes'
 
 // @helpers
-function formatMoviesData(movies, TMDBConfiguration) {
+function getCompleteImage(path, size, TMDBConfiguration) {
   const imageBaseUrl = TMDBConfiguration.images.base_url
-  const imageSize = TMDBConfiguration.images.poster_sizes[4]
 
+  return `${imageBaseUrl}${size}${path}`
+}
+
+function formatMoviesData(movies, TMDBConfiguration) {
+  const W_342 = 3
+  const imageSize = TMDBConfiguration.images.poster_sizes[W_342]
   const moviesWithCompleteImage = movies.results
     .reduce((previousValue, currentValue) => {
       return {
         ...previousValue,
         [currentValue.id]: {
           ...currentValue,
-          complete_image: `${imageBaseUrl}${imageSize}/${currentValue.poster_path}`
+          complete_image: getCompleteImage(currentValue.poster_path, imageSize, TMDBConfiguration)
         }
       }
     }, {})
@@ -26,23 +30,34 @@ function formatMoviesData(movies, TMDBConfiguration) {
   }
 }
 
+function formatMovieData(movie, TMDBConfiguration) {
+  const W_342 = 3
+  const imageSize = TMDBConfiguration.images.poster_sizes[W_342]
+  const formattedMovie = Object.assign({}, movie, {
+    complete_image: getCompleteImage(movie.poster_path, imageSize, TMDBConfiguration)
+  })
+
+  return formattedMovie
+}
+
+// @action creators
 function requestingMovies() {
   return {
-    type: types.REQUESTING_MOVIES
+    type: actionTypes.REQUESTING_MOVIES,
   }
 }
 
 function requestMoviesFailure(error) {
   return {
-    type: types.REQUEST_MOVIES_FAILURE,
-    error
+    type: actionTypes.REQUEST_MOVIES_FAILURE,
+    error,
   }
 }
 
 function requestMoviesSuccess(payload) {
   return {
-    type: types.REQUEST_MOVIES_SUCCESS,
-    payload
+    type: actionTypes.REQUEST_MOVIES_SUCCESS,
+    payload,
   }
 }
 
@@ -63,6 +78,45 @@ function getMovies() {
   }
 }
 
+function requestMovie() {
+  return {
+    type: actionTypes.REQUESTING_MOVIE,
+  }
+}
+
+
+function requestMovieFailure(error) {
+  return {
+    type: actionTypes.REQUEST_MOVIE_FAILURE,
+    error,
+  }
+}
+
+function requestMovieSuccess(payload) {
+  return {
+    type: actionTypes.REQUEST_MOVIE_SUCCESS,
+    payload,
+  }
+}
+
+function getMovie(movieID) {
+  return (dispatch, getState) => {
+    const state = getState()
+
+    dispatch(requestMovie())
+
+    APIInterface.getMovie(movieID)
+      .then(movie => {
+        const formattedMovie = formatMovieData(movie, state.TMDBConfiguration)
+        dispatch(requestMovieSuccess(formattedMovie))
+      })
+      .catch(error => {
+        dispatch(requestMovieFailure(error))
+      })
+  }
+}
+
 export default {
-  getMovies
+  getMovies,
+  getMovie
 }

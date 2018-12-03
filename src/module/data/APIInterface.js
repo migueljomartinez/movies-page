@@ -11,14 +11,19 @@ function fetchHelper(url, { method = 'GET', body = null } = {}) {
 }
 
 function getMovies() {
-  return fetchHelper(urls.movies)
+  return fetchHelper(urls.movies())
 }
 
 function getTMDBConfiguration() {
-  return fetchHelper(urls.tmdbConfiguration)
+  return fetchHelper(urls.tmdbConfiguration())
+}
+
+function getMovie(movieID) {
+  return fetchHelper(urls.movie(movieID))
 }
 
 export default {
   getMovies,
   getTMDBConfiguration,
+  getMovie,
 }
