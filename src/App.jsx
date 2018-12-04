@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import configureStore from 'module/state/configureStore'
 
 // @components
-import Root from 'Components/Pages/Root/Root'
+import Root from 'Containers/Root'
 
 const store = configureStore()
 

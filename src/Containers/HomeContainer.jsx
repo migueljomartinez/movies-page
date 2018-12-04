@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Home from 'Components/Pages/Home/Home'
 import moviesActions from 'module/state/movies/actions'
+import favoritesAction from 'module/state/favorites/favoritesActions'
 
 const mapStateToProps = (state) => {
   return {
@@ -15,6 +16,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     requestMovies: () => {
       dispatch(moviesActions.getMovies())
+    },
+    likeMovie: (event, movieID) => {
+      event.stopPropagation()
+      event.preventDefault()
+
+      dispatch(favoritesAction.addFavoriteMovie(movieID))
     }
   }
 }

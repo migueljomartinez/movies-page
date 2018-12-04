@@ -8,7 +8,7 @@ import {
 
 // @components
 import Home from 'Containers/HomeContainer'
-import Favorites from 'Containers/Favorites'
+import Favorites from 'Containers/FavoritesContainer'
 import Movie from 'Containers/MovieContainer'
 
 // @actions
