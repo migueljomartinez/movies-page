@@ -24,13 +24,16 @@ class Home extends Component {
         </nav>
         <div className={styles.cards}>
           {
-            _map(movies.entities, movie => (
+            _map(movies, movie => (
               <Link to={`/movie/${movie.id}`} className={styles.card} key={movie.id}>
                 <Card
-                  title={movie.title}
-                  image={movie.complete_image}
-                  rating={movie.vote_average}
-                  id={movie.id}
+                  data={{
+                    title: movie.title,
+                    image: movie.complete_image,
+                    rating: movie.vote_average,
+                    id: movie.id,
+                    favorite: movie.favorite,
+                  }}
                   onLike={likeMovie}
                 />
               </Link>

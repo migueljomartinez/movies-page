@@ -19,10 +19,12 @@ const Favorites = ({ favoriteMovies }) => {
           _map(favoriteMovies, movie => (
             <div className={styles.card} key={movie.id}>
               <Card
-                title={movie.title}
-                image={movie.complete_image}
-                rating={movie.vote_average}
-                id={movie.id}
+                data={{
+                  title: movie.title,
+                  image: movie.complete_image,
+                  rating: movie.vote_average,
+                  id: movie.id,
+                }}
                 key={movie.id}
               />
             </div>

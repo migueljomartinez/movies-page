@@ -3,13 +3,13 @@ import styles from './Card.module.sass'
 
 class Card extends Component {
   handleLike = (e) => {
-    const { onLike, id } = this.props
+    const { onLike, data } = this.props
 
-    if (onLike) onLike(e, id)
+    if (onLike) onLike(e, data)
   }
 
   render() {
-    const { image, title, rating } = this.props
+    const { image, title, rating, favorite } = this.props.data
 
     return (
       <div className={styles.container}>
@@ -20,7 +20,7 @@ class Card extends Component {
           <h3 className={styles.title}>{title}</h3>
           <p className={styles.rating}>{rating}</p>
           <button onClick={this.handleLike}>
-            Like
+            { favorite ? 'Unlike' : 'Like' }
           </button>
         </div>
       </div>

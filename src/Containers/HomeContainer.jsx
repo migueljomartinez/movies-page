@@ -1,27 +1,53 @@
+// @vendors
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import _map from 'lodash.map'
+
+// @components
 import Home from 'Components/Pages/Home/Home'
+
+// @actions
 import moviesActions from 'module/state/movies/actions'
 import favoritesAction from 'module/state/favorites/favoritesActions'
 
-const mapStateToProps = (state) => {
+const extendMovies = (movies, favorites) => {
+  const withFavorites = _map(movies.entities, movie => {
+    return Object.assign({}, movie, {
+      favorite: !!favorites[movie.id]
+    })
+  })
+
+  return withFavorites
+}
+
+const mapStateToProps = state => {
+  const { movies, favorites } = state
+  const moviesWithFavorite = extendMovies(movies, favorites)
+
+  console.log('moviesWithFavorite', moviesWithFavorite)
+
   return {
-    movies: state.movies,
+    movies: moviesWithFavorite,
     TMDBConfiguration: state.TMDBConfiguration
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     requestMovies: () => {
       dispatch(moviesActions.getMovies())
     },
-    likeMovie: (event, movieID) => {
+    likeMovie: (event, movie) => {
       event.stopPropagation()
       event.preventDefault()
 
-      dispatch(favoritesAction.addFavoriteMovie(movieID))
+      if (movie.favorite) {
+        dispatch(favoritesAction.removeFavoriteMovie(movie.id))
+      } else {
+        dispatch(favoritesAction.addFavoriteMovie(movie.id))
+      }
+
     }
   }
 }
