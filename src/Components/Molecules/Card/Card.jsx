@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import styles from './Card.module.sass'
 
 class Card extends Component {
@@ -34,6 +35,16 @@ class Card extends Component {
       </div>
     )
   }
+}
+
+Card.propTypes = {
+  data: PropTypes.shape({
+    image: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+    favorite: PropTypes.bool,
+  }).isRequired,
+  onLike: PropTypes.func,
 }
 
 export default Card

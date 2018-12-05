@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Video = ({ data }) => {
   const url = `https://www.youtube.com/embed/${data.key}`
@@ -14,6 +15,12 @@ const Video = ({ data }) => {
       title={'title'}
     />
   )
+}
+
+Video.propTypes = {
+  data: PropTypes.shape({
+    key: PropTypes.string.isRequired
+  })
 }
 
 export default Video

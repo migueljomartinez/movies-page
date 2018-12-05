@@ -1,5 +1,6 @@
 // @vendors
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
   BrowserRouter as Router,
@@ -59,6 +60,11 @@ class Root extends Component {
       </Router>
     )
   }
+}
+
+Root.propTypes = {
+  TMDBConfiguration: PropTypes.object.isRequired,
+  getTMDBConfiguration: PropTypes.func.isRequired,
 }
 
 export default connect(

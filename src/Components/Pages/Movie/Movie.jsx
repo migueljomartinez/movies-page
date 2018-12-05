@@ -1,4 +1,8 @@
+// @vendors
 import React from 'react'
+import PropTypes from 'prop-types'
+
+// @styles
 import styles from './Movie.module.sass'
 
 const Movie = ({ movie }) => {
@@ -18,6 +22,16 @@ const Movie = ({ movie }) => {
       </p>
     </div>
   )
+}
+
+Movie.propTypes = {
+  movie: PropTypes.shape({
+    complete_image: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    overview: PropTypes.string.isRequired,
+    release_date: PropTypes.string.isRequired,
+    vote_average: PropTypes.number.isRequired,
+  }).isRequired
 }
 
 export default Movie

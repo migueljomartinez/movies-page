@@ -15,7 +15,11 @@ const requestMovieVideosFailure = error => ({
   error
 })
 
+/**
+ * async action creator (thunk)
+ */
 const getMovieVideos = movieID => dispatch => {
+  dispatch(requestingMovieVideos())
   APIInterface.getMovieVideos(movieID)
     .then(data => {
       const extendedVideos = data.results.reduce((previous, current) => {

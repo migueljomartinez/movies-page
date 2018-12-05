@@ -13,6 +13,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export default function configureStore() {
+  // get saved state from localstorage to hydrate the store
   const initialState = JSON.parse(localStorage.getItem('state')) || {}
   const store = createStore(
     rootReducer,
@@ -26,6 +27,8 @@ export default function configureStore() {
   store.subscribe(() => {
     const state = store.getState()
     const serializedState = JSON.stringify(state)
+
+    // save the app state into localstorage to hydrate the app after reloading
     window.localStorage.setItem('state', serializedState)
   })
 

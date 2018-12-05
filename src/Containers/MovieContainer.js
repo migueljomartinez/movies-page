@@ -46,6 +46,7 @@ class MovieContainer extends Component {
     )
   }
 }
+
 MovieContainer.propTypes = {
   getMovie: PropTypes.func.isRequired,
   movie: PropTypes.object

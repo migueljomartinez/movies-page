@@ -1,5 +1,6 @@
 // @vendors
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Modal from 'react-modal'
 import _map from 'lodash.map'
 
@@ -39,8 +40,8 @@ class Favorites extends Component {
         <div className={styles.cards}>
           {
             _map(favoriteMovies, movie => (
-              <div className={styles.cardContainer}>
-                <button className={styles.card} key={movie.id} onClick={e => this.handleMovieClick(e, movie)}>
+              <div className={styles.cardContainer} key={movie.id}>
+                <button className={styles.card} onClick={e => this.handleMovieClick(e, movie)}>
                   <Card
                     data={{
                       title: movie.title,
@@ -48,7 +49,6 @@ class Favorites extends Component {
                       rating: movie.vote_average,
                       id: movie.id,
                     }}
-                    key={movie.id}
                   />
                 </button>
               </div>
@@ -72,6 +72,11 @@ class Favorites extends Component {
       </div>
     )
   }
+}
+
+Favorites.propTypes = {
+  favoriteMovies: PropTypes.array.isRequired,
+  currentMovieVideos: PropTypes.array.isRequired,
 }
 
 export default Favorites

@@ -11,12 +11,20 @@ import Home from 'Components/Pages/Home/Home'
 import moviesActions from 'module/state/movies/actions'
 import favoritesAction from 'module/state/favorites/favoritesActions'
 
+/**
+ * add favorite flag to all movies
+ * 
+ * @param {object} movies 
+ * @param {object} favorites
+ * 
+ * @return {array} extended movies
+ */
 const extendMovies = (movies, favorites) => {
-  const withFavorites = _map(movies.entities, movie => {
-    return Object.assign({}, movie, {
+  const withFavorites = _map(movies.entities, movie => (
+    Object.assign({}, movie, {
       favorite: !!favorites[movie.id]
     })
-  })
+  ))
 
   return withFavorites
 }
@@ -72,8 +80,7 @@ class HomeContainer extends Component {
 
 HomeContainer.propTypes = {
   TMDBConfiguration: PropTypes.object.isRequired,
-  requestMovies: PropTypes.func.isRequired,
-  getTMDBConfiguration: PropTypes.func.isRequired
+  requestMovies: PropTypes.func.isRequired
 }
 
 export default connect(

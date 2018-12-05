@@ -15,6 +15,9 @@ const requestConfigurationFailure = (error) => ({
   error,
 })
 
+/**
+ * async action creator (thunk)
+ */
 const getTMDBConfiguration = () => (dispatch, _getState) => {
   dispatch(requestConfiguration())
 

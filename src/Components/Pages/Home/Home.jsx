@@ -25,7 +25,7 @@ class Home extends Component {
         <div className={styles.cards}>
           {
             _map(movies, movie => (
-              <div className={styles.cardContainer}>
+              <div className={styles.cardContainer} key={movie.id}>
                 <Link to={`/movie/${movie.id}`} className={styles.card} key={movie.id}>
                   <Card
                     data={{
@@ -48,7 +48,8 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  movies: PropTypes.object.isRequired,
+  movies: PropTypes.array.isRequired,
+  likeMovie: PropTypes.func.isRequired,
 }
 
 export default Home
