@@ -8,6 +8,25 @@ import Card from 'Components/Molecules/Card/Card'
 import styles from './Home.module.sass'
 import _map from 'lodash.map'
 
+const MovieList = ({ movies, likeMovie }) => (
+  _map(movies, movie => (
+    <div className={styles.cardContainer} key={movie.id}>
+      <Link to={`/movie/${movie.id}`} className={styles.card} key={movie.id}>
+        <Card
+          data={{
+            title: movie.title,
+            image: movie.complete_image,
+            rating: movie.vote_average,
+            id: movie.id,
+            favorite: movie.favorite,
+          }}
+          onLike={likeMovie}
+        />
+      </Link>
+    </div>
+  ))
+)
+
 class Home extends Component {
   render() {
     const { movies, likeMovie } = this.props
@@ -23,24 +42,7 @@ class Home extends Component {
           </ul>
         </nav>
         <div className={styles.cards}>
-          {
-            _map(movies, movie => (
-              <div className={styles.cardContainer} key={movie.id}>
-                <Link to={`/movie/${movie.id}`} className={styles.card} key={movie.id}>
-                  <Card
-                    data={{
-                      title: movie.title,
-                      image: movie.complete_image,
-                      rating: movie.vote_average,
-                      id: movie.id,
-                      favorite: movie.favorite,
-                    }}
-                    onLike={likeMovie}
-                  />
-                </Link>
-              </div>
-            ))
-          }
+          <MovieList movies={movies} likeMovie={likeMovie} />
         </div>
       </div>
     )

@@ -32,6 +32,8 @@ class Root extends Component {
       getTMDBConfiguration,
     } = this.props
 
+    // only initialize tmdb configuration if
+    // it's not initialized and not loading and there is no error
     if (
       !TMDBConfiguration.initialized &&
       !TMDBConfiguration.loading &&
@@ -44,6 +46,7 @@ class Root extends Component {
   render() {
     const { TMDBConfiguration } = this.props
 
+    // if tmdb configuration is not ready render a loading
     if (TMDBConfiguration.loading || !TMDBConfiguration.initialized) {
       return (
         <p>Loading...</p>
