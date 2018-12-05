@@ -25,8 +25,6 @@ const mapStateToProps = state => {
   const { movies, favorites } = state
   const moviesWithFavorite = extendMovies(movies, favorites)
 
-  console.log('moviesWithFavorite', moviesWithFavorite)
-
   return {
     movies: moviesWithFavorite,
     TMDBConfiguration: state.TMDBConfiguration

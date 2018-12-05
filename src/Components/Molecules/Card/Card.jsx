@@ -9,7 +9,9 @@ class Card extends Component {
   }
 
   render() {
-    const { image, title, rating, favorite } = this.props.data
+    const { onLike } = this.props
+    const { data } = this.props
+    const { image, title, rating, favorite } = data
 
     return (
       <div className={styles.container}>
@@ -18,10 +20,16 @@ class Card extends Component {
         </div>
         <div className={styles.info}>
           <h3 className={styles.title}>{title}</h3>
-          <p className={styles.rating}>{rating}</p>
-          <button onClick={this.handleLike}>
-            { favorite ? 'Unlike' : 'Like' }
-          </button>
+          <p className={styles.rating}>
+            Rating: {rating}
+          </p>
+          {
+            onLike && (
+              <button onClick={this.handleLike}>
+                { favorite ? 'Unlike' : 'Like' }
+              </button>
+            )
+          }
         </div>
       </div>
     )

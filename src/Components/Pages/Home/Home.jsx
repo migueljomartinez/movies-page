@@ -25,18 +25,20 @@ class Home extends Component {
         <div className={styles.cards}>
           {
             _map(movies, movie => (
-              <Link to={`/movie/${movie.id}`} className={styles.card} key={movie.id}>
-                <Card
-                  data={{
-                    title: movie.title,
-                    image: movie.complete_image,
-                    rating: movie.vote_average,
-                    id: movie.id,
-                    favorite: movie.favorite,
-                  }}
-                  onLike={likeMovie}
-                />
-              </Link>
+              <div className={styles.cardContainer}>
+                <Link to={`/movie/${movie.id}`} className={styles.card} key={movie.id}>
+                  <Card
+                    data={{
+                      title: movie.title,
+                      image: movie.complete_image,
+                      rating: movie.vote_average,
+                      id: movie.id,
+                      favorite: movie.favorite,
+                    }}
+                    onLike={likeMovie}
+                  />
+                </Link>
+              </div>
             ))
           }
         </div>

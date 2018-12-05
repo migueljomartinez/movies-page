@@ -22,8 +22,13 @@ function getMovie(movieID) {
   return fetchHelper(urls.movie(movieID))
 }
 
+function getMovieVideos(movieID) {
+  return fetchHelper(urls.videos(movieID))
+}
+
 export default {
   getMovies,
   getTMDBConfiguration,
   getMovie,
+  getMovieVideos,
 }
