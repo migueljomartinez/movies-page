@@ -26,7 +26,7 @@ class Card extends Component {
           </p>
           {
             onLike && (
-              <button onClick={this.handleLike}>
+              <button className={styles.like} onClick={this.handleLike}>
                 { favorite ? 'Unlike' : 'Like' }
               </button>
             )
