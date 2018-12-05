@@ -11,14 +11,15 @@ const Movie = ({ movie }) => {
       <figure className={styles.imageContainer}>
         <img className={styles.image} src={movie.complete_image} alt={movie.title} />
       </figure>
+      <h2 className={styles.title}>{movie.title}</h2>
       <p className={styles.description}>
         {movie.overview}
       </p>
       <p className={styles.year}>
-        {movie.release_date}
+        release date: <strong>{movie.release_date}</strong>
       </p>
       <p className={styles.rating}>
-        {movie.vote_average}
+        rating: <strong>{movie.vote_average}</strong>
       </p>
     </div>
   )
