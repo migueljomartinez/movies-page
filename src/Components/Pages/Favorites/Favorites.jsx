@@ -11,10 +11,10 @@ import Video from 'Components/Atoms/Video/Video'
 // @styles
 import styles from './Favorites.module.sass'
 
-const FavoriteMovies = ({ favoriteMovies }) => (
+const FavoriteMovies = ({ favoriteMovies, handleMovieClick }) => (
   _map(favoriteMovies, movie => (
     <div className={styles.cardContainer} key={movie.id}>
-      <button className={styles.card} onClick={e => this.handleMovieClick(e, movie)}>
+      <button className={styles.card} onClick={e => handleMovieClick(e, movie)}>
         <Card
           data={{
             title: movie.title,
@@ -65,7 +65,7 @@ class Favorites extends Component {
           Favorites movies
         </h1>
         <div className={styles.cards}>
-          <FavoriteMovies favoriteMovies={favoriteMovies} />
+          <FavoriteMovies favoriteMovies={favoriteMovies} handleMovieClick={this.handleMovieClick} />
         </div>
         <Modal isOpen={isModalOpen}>
           <button onClick={() => this.toggleModal(false)}>Close</button>

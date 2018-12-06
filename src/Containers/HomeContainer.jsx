@@ -20,7 +20,7 @@ import favoritesAction from 'module/state/favorites/favoritesActions'
  * @return {array} extended movies
  */
 const extendMovies = (movies, favorites) => {
-  const withFavorites = _map(movies.entities, movie => (
+  const withFavorites = _map(movies.results, movie => (
     Object.assign({}, movie, {
       favorite: !!favorites[movie.id]
     })
@@ -29,34 +29,45 @@ const extendMovies = (movies, favorites) => {
   return withFavorites
 }
 
-const mapStateToProps = state => {
+const selectMovies = (state, ownProps) => {
   const { movies, favorites } = state
-  const moviesWithFavorite = extendMovies(movies, favorites)
+  const extendedMovies = extendMovies(movies, favorites)
 
   return {
-    movies: moviesWithFavorite,
-    TMDBConfiguration: state.TMDBConfiguration
+    loading: movies.loading,
+    page: movies.page,
+    list: extendedMovies,
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    requestMovies: () => {
-      dispatch(moviesActions.getMovies())
-    },
-    likeMovie: (event, movie) => {
-      event.stopPropagation()
-      event.preventDefault()
+const mapStateToProps = (state, ownProps) => ({
+  movies: selectMovies(state, ownProps),
+  loading: state.movies.loading,
+  TMDBConfiguration: state.TMDBConfiguration,
+  hasMoreMovies: true,
+})
 
-      if (movie.favorite) {
-        dispatch(favoritesAction.removeFavoriteMovie(movie.id))
-      } else {
-        dispatch(favoritesAction.addFavoriteMovie(movie.id))
-      }
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  requestMovies: () => {
+    const FIRST_PAGE = 1
+    dispatch(moviesActions.getMovies(FIRST_PAGE))
+  },
+  likeMovie: (event, movie) => {
+    event.stopPropagation()
+    event.preventDefault()
 
+    if (movie.favorite) {
+      dispatch(favoritesAction.removeFavoriteMovie(movie.id))
+    } else {
+      dispatch(favoritesAction.addFavoriteMovie(movie.id))
     }
-  }
-}
+  },
+  loadMoreMovies: (page, loading) => {
+    if (loading || page === undefined) return
+
+    dispatch(moviesActions.getMovies(page + 1))
+  },
+})
 
 class HomeContainer extends Component {
   componentDidMount() {

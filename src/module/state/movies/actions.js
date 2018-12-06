@@ -24,21 +24,14 @@ function formatMoviesData(movies, TMDBConfiguration) {
   const W_342 = 3
   const imageSize = TMDBConfiguration.images.poster_sizes[W_342]
   const moviesWithCompleteImage = movies.results
-    .reduce((previousValue, currentValue) => {
-      return {
-        ...previousValue,
-        [currentValue.id]: {
-          ...currentValue,
-          complete_image: getCompleteImage(currentValue.poster_path, imageSize, TMDBConfiguration)
-        }
-      }
-    }, {})
-
-  delete movies.results
+    .map(movie => ({
+      ...movie,
+      complete_image: getCompleteImage(movie.poster_path, imageSize, TMDBConfiguration)
+    }))
 
   return {
     ...movies,
-    entities: moviesWithCompleteImage,
+    results: moviesWithCompleteImage,
   }
 }
 /**
@@ -80,12 +73,16 @@ function requestMoviesSuccess(payload) {
 /**
  * Async action creator (thunk)
  */
-function getMovies() {
+function getMovies(page = 1) {
   return (dispatch, getState) => {
     const state = getState()
+    const { movies } = state
+
+    if (movies.loading) return
+
     dispatch(requestingMovies())
 
-    APIInterface.getMovies()
+    APIInterface.getMovies(page)
       .then(data => {
         const formattedData = formatMoviesData(data, state.TMDBConfiguration)
 
@@ -93,6 +90,7 @@ function getMovies() {
       })
       .catch(error => {
         dispatch(requestMoviesFailure(error))
+        throw error
       })
   }
 }

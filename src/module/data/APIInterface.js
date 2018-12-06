@@ -13,8 +13,8 @@ function fetchHelper(url, { method = 'GET', body = null } = {}) {
 /**
  * Get all movies
  */
-function getMovies() {
-  return fetchHelper(urls.movies())
+function getMovies(page) {
+  return fetchHelper(urls.movies(page))
 }
 
 /**

@@ -32,11 +32,11 @@ const selectCurrentMovieVideos = (allVideos, currentMovie) => {
  * @return {array} favorite movies
  */
 const selectFavoriteMovies = state => {
-  const movies = state.movies.entities
+  const movies = state.movies.results
   const { favorites } = state
 
   const favoriteMovies = _map(favorites, favoriteMovieID => {
-    const favoriteMovie = movies[favoriteMovieID]
+    const favoriteMovie = movies.find(movie => movie.id === favoriteMovieID)
     return favoriteMovie
   }).filter(favoritMovie => !!favoritMovie)
 

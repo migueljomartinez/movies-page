@@ -8,8 +8,8 @@ import { connect } from 'react-redux'
 import moviesActions from 'module/state/movies/actions'
 
 const selectMovie = (state, ownProps) => {
-  const movieID = ownProps.match.params.id
-  const movie = state.movies.entities[movieID]
+  const currentMovieID = ownProps.match.params.id
+  const movie = state.movies.results.find(movie => (`${movie.id}` === `${currentMovieID}`))
 
   return movie
 }

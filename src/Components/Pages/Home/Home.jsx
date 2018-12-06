@@ -1,5 +1,6 @@
 // @vendors
 import React, { Component } from 'react'
+import InfiniteScroll from 'react-infinite-scroller'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
@@ -29,7 +30,10 @@ const MovieList = ({ movies, likeMovie }) => (
 
 class Home extends Component {
   render() {
-    const { movies, likeMovie } = this.props
+    const { movies, likeMovie, loadMoreMovies, hasMoreMovies } = this.props
+    const loader = (
+      <p key="infinite-loader">Loading...</p>
+    )
 
     return (
       <div className={styles.container}>
@@ -41,16 +45,31 @@ class Home extends Component {
             </li>
           </ul>
         </nav>
-        <div className={styles.cards}>
-          <MovieList movies={movies} likeMovie={likeMovie} />
+        <div className={styles.filterContainer}>
+          <h3>Filter</h3>
+          <Link to="/">All</Link>{' --- '}
+          <Link to="/?filter=date">By date</Link>
         </div>
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={() => loadMoreMovies(movies.page, movies.loading)}
+          hasMore={hasMoreMovies}
+          loader={loader}
+          className={styles.cards}
+        >
+          <MovieList movies={movies.list} likeMovie={likeMovie} key="infinite-cards" />
+        </InfiniteScroll>
       </div>
     )
   }
 }
 
 Home.propTypes = {
-  movies: PropTypes.array.isRequired,
+  movies: PropTypes.shape({
+    list: PropTypes.array.isRequired,
+    page: PropTypes.number,
+    loading: PropTypes.bool.isRequired,
+  }),
   likeMovie: PropTypes.func.isRequired,
 }
 
