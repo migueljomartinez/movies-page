@@ -4,25 +4,65 @@
   overflow: hidden
   width: 25rem
   max-width: 30rem
-  min-height: 40rem
-  max-height: 40rem
+  transition: box-shadow 300ms
+  &:hover
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4)
 
 .image
-  height: 24rem
+  height: 30rem
   width: 100%
-  border-bottom: 3px solid #8bc34a
+  border-bottom: 3px solid #f44336
 
 .info
   padding: 1rem
   text-decoration: none
   color: black
   text-align: left
+  min-height: 15rem
+  position: relative
 
 .title
   text-decoration: none
+  margin: 0.5rem 0 0 0
+  padding: 0 3rem 0 0
 
 .rating
   text-decoration: none
+  margin-top: 0.5rem
 
 .like
   cursor: pointer
+  position: absolute
+  right: 1rem
+  bottom: 1rem
+  background-color: transparent
+  border: none
+  animation: heart-down 300ms
+  svg
+    fill: lightgray
+
+.likeActive
+  composes: like
+  animation: heart-up 300ms
+  svg
+    fill: #f44336
+
+@keyframes heart-down
+  0%
+    transform: scale(1)
+  
+  50%
+    transform: scale(0.8)
+
+  100%
+    transform: scale(1)
+
+@keyframes heart-up
+  0%
+    transform: scale(1)
+  
+  50%
+    transform: scale(1.3)
+
+  100%
+    transform: scale(1)

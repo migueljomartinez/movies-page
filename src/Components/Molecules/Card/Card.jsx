@@ -1,5 +1,11 @@
+// @vendors
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
+// @components
+import Icon from 'Components/Atoms/Icon/Icon'
+
+// @styles
 import styles from './Card.module.sass'
 
 class Card extends Component {
@@ -13,6 +19,7 @@ class Card extends Component {
     const { onLike } = this.props
     const { data } = this.props
     const { image, title, rating, favorite } = data
+    const likeClassName = favorite ? styles.likeActive : styles.like
 
     return (
       <div className={styles.container}>
@@ -26,8 +33,10 @@ class Card extends Component {
           </p>
           {
             onLike && (
-              <button className={styles.like} onClick={this.handleLike}>
-                { favorite ? 'Unlike' : 'Like' }
+              <button className={likeClassName} onClick={this.handleLike}>
+                {
+                  favorite ? <Icon name="heart" /> : <Icon name="heart" />
+                }
               </button>
             )
           }
