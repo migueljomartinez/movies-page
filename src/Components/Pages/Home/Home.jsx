@@ -45,11 +45,6 @@ class Home extends Component {
             </li>
           </ul>
         </nav>
-        <div className={styles.filterContainer}>
-          <h3>Filter</h3>
-          <Link to="/">All</Link>{' --- '}
-          <Link to="/?filter=date">By date</Link>
-        </div>
         <InfiniteScroll
           pageStart={0}
           loadMore={() => loadMoreMovies(movies.page, movies.loading)}

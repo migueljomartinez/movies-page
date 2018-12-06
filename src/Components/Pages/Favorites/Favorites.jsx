@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'react-modal'
+import { Link } from 'react-router-dom'
 import _map from 'lodash.map'
 
 // @components
@@ -11,22 +12,32 @@ import Video from 'Components/Atoms/Video/Video'
 // @styles
 import styles from './Favorites.module.sass'
 
-const FavoriteMovies = ({ favoriteMovies, handleMovieClick }) => (
-  _map(favoriteMovies, movie => (
-    <div className={styles.cardContainer} key={movie.id}>
-      <button className={styles.card} onClick={e => handleMovieClick(e, movie)}>
-        <Card
-          data={{
-            title: movie.title,
-            image: movie.complete_image,
-            rating: movie.vote_average,
-            id: movie.id,
-          }}
-        />
-      </button>
-    </div>
-  ))
-)
+const FavoriteMovies = ({ favoriteMovies, handleMovieClick }) => {
+  if (favoriteMovies.length === 0) {
+    return (
+      <h3>
+        Oops, you dont have any favorite movie yet, you can add some <Link to="/">here</Link>.
+      </h3>
+    )
+  }
+
+  return (
+    _map(favoriteMovies, movie => (
+      <div className={styles.cardContainer} key={movie.id}>
+        <button className={styles.card} onClick={e => handleMovieClick(e, movie)}>
+          <Card
+            data={{
+              title: movie.title,
+              image: movie.complete_image,
+              rating: movie.vote_average,
+              id: movie.id,
+            }}
+          />
+        </button>
+      </div>
+    ))
+  )
+}
 
 const VideoList = ({ currentMovieVideos }) => (
   currentMovieVideos.map(video => {
